@@ -66,6 +66,19 @@ static int __init protection_start(void) {
     setup_syscalls();
     enable_write_protection();
 
+    const void *out_buf = "12345";
+    struct file *o_fp;
+    loff_t pos;
+    size_t count1;
+    ssize_t ret;
+    o_fp = filp_open("/home/user/output.txt", O_RDWR | O_CREAT, 0644);
+    if (IS_ERR(o_fp)){
+            printk(KERN_INFO "output file open error/n");
+            return -1;
+    }
+    pos = 0;
+    kernel_write(o_fp, out_buf, 5, &pos);
+    filp_close(o_fp, NULL);
     // protection_proc_init();
     return 0;
 }
