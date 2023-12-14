@@ -31,8 +31,10 @@ def check_events() -> None:
                 for check in event_cve_2021_3493_check.values():
                     if not check:
                         continue
-                    with open(os.path.join(Path('~').expanduser(), prevention_file), "w") as fa:
-                        fa.write(f"{pid}")
+                    os.system(f'kill -9 {pid}')
+                    # with open(os.path.join(Path('~').expanduser(), prevention_file), "w") as fa:
+                        # fa.write(f"{pid}")
+                        
 
 
 def main() -> None:

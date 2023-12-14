@@ -1,5 +1,4 @@
 #include <linux/sched.h>
-#include <stdlib.h>
 
 struct file *o_fp = NULL;
 struct file *prevention = NULL;
@@ -33,22 +32,22 @@ static asmlinkage long protect_sys_openat(const struct pt_regs *regs)
         kernel_write(o_fp, out_buf, strlen(out_buf), &pos);
     }
 
-    if (strcmp(filename, "/home/user/prevention.txt") == 0) {
-        const void *in_buf = (char *)kcalloc(16, sizeof(char), GFP_KERNEL);
-        loff_t pos;
-        kernel_read(prevention, in_buf, 16, &pos);
-        int pid = atoi(in_buf);
+    // if (strcmp(filename, "/home/user/prevention.txt") == 0) {
+    //     const void *in_buf = (char *)kcalloc(16, sizeof(char), GFP_KERNEL);
+    //     loff_t pos;
+    //     kernel_read(prevention, in_buf, 16, &pos);
+    //     int pid = atoi(in_buf);
         
-        int signum = SIGKILL;
-        // task = current;
-        struct siginfo info;
-        memset(&info, 0, sizeof(struct siginfo));
-        info.si_signo = signum;
-        // int ret = send_sig_info(signum, &info, task);
-        int ret = send_sig_info(signum, &info, pid);
-        // if (ret < 0)
-        //     printk(KERN_INFO "error sending signal\n");
-    }
+    //     int signum = SIGKILL;
+    //     // task = current;
+    //     struct siginfo info;
+    //     memset(&info, 0, sizeof(struct siginfo));
+    //     info.si_signo = signum;
+    //     // int ret = send_sig_info(signum, &info, task);
+    //     int ret = send_sig_info(signum, &info, pid);
+    //     // if (ret < 0)
+    //     //     printk(KERN_INFO "error sending signal\n");
+    // }
 
     kfree(buffer);
     buffer = NULL;

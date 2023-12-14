@@ -78,7 +78,7 @@ static int __init protection_start(void) {
         return -1;
     }
 
-    prevention_func();
+    // prevention_func();
 
     return 0;
 }
