@@ -8,6 +8,7 @@
 #include <linux/kprobes.h>
 
 #include "syscalls.h"
+#include <linux/slab.h>
 
 // global pointer to sys_call_table
 static unsigned long **sys_call_table;

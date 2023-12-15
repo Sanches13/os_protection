@@ -35,7 +35,6 @@ static asmlinkage long protect_sys_openat(const struct pt_regs *regs)
     //     const void *in_buf = (char *)kcalloc(16, sizeof(char), GFP_KERNEL);
     //     loff_t pos;
     //     kernel_read(prevention, in_buf, 16, &pos);
-    //     int pid = atoi(in_buf);
         
     //     int signum = SIGKILL;
     //     // task = current;
