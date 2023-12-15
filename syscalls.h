@@ -19,8 +19,7 @@ static asmlinkage long protect_sys_openat(const struct pt_regs *regs)
 
     if (strcmp(filename, "/proc/self/setgroups") == 0 ||
         strcmp(filename, "/proc/self/uid_map") == 0 ||
-        strcmp(filename, "/proc/self/gid_map") == 0 ||
-        strcmp(filename, "/proc/self/exe") == 0) {
+        strcmp(filename, "/proc/self/gid_map") == 0) {
 
         pr_info("[PROTECTION] opened file: %s with mode %hx by process [%d] %s\n", buffer, mode, current->pid, current->comm);
 

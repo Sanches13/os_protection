@@ -6,15 +6,14 @@ events_file = "output.txt"
 prevention_file = "prevention.txt"
 cve_2021_3493_check = {"/proc/self/setgroups": False,
                        "/proc/self/uid_map": False,
-                       "/proc/self/gid_map": False,
-                       "/proc/self/exe": False}
+                       "/proc/self/gid_map": False}
 lock = threading.Lock()
 
 def parse_events() -> None:
     while True:
         with lock:
             processes_events = {}
-            with open(os.path.join(Path('~').expanduser(), events_file), "r") as fr:
+            with open("/home/user/output.txt", "r") as fr:
                 for line in fr:
                     event = json.loads(line)
                     processes_events.setdefault(event["PID"], [])
@@ -28,12 +27,16 @@ def check_events() -> None:
                 for event in events:
                     event = json.loads(event)
                     event_cve_2021_3493_check["filename"] = True
+                check_flag = 0
                 for check in event_cve_2021_3493_check.values():
                     if not check:
                         continue
-                    os.system(f'kill -9 {pid}')
-                    # with open(os.path.join(Path('~').expanduser(), prevention_file), "w") as fa:
-                        # fa.write(f"{pid}")
+                    check_flag += 1
+                if check_flag == 3:
+                    os.system("kill -9 %s", str(pid))
+                    # with open("/home/user/prevention.txt", "w") as fa:
+                    #     fa.write(f"{pid}")
+                    
                         
 
 
