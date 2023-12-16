@@ -36,12 +36,22 @@ def check_events() -> None:
                 if check_flag == 3:
                     # print(f"Try to kill process {pid}")
                     if psutil.pid_exists(int(pid)):
-                        print(f"Try to kill process {pid}")
-                        # os.system(f"kill -9 {pid}")
-                        # os.kill(int(pid), SIGKILL)
-                        for proc in psutil.process_iter():
-                            if proc.pid() == int(pid):
-                                proc.kill()
+                        parent = int(pid) - 1
+                        os.system(f"sudo kill -9 {parent}")
+                        os.system(f"sudo kill -9 {pid}")
+
+                        # okay
+                        # parent_pid = psutil.Process(int(pid)).ppid()
+                        # parent = psutil.Process(parent_pid)
+                        # children = parent.children(recursive=True)
+                        # for child in children:
+                        #     print(f"Kill process {child.pid}")
+                        #     child.kill()
+                        # gone, still_alive = psutil.wait_procs(children, timeout=1)
+                        # parent.kill()
+                        # print(f"Kill process {parent.pid}")
+                        # parent.wait(1)
+                        # okay
                     # with open("/home/user/prevention.txt", "w") as fa:
                     #     fa.write(f"{pid}")
             # for pid, events in processes_events.items():
