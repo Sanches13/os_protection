@@ -1,13 +1,12 @@
 import threading, os, json, copy, psutil
-from pathlib import Path
-from signal import SIGKILL
 
 processes_events = dict()
+
 events_file = "output.txt"
-prevention_file = "prevention.txt"
 cve_2021_3493_check = {"/proc/self/setgroups": False,
                        "/proc/self/uid_map": False,
                        "/proc/self/gid_map": False}
+
 lock = threading.Lock()
 
 def parse_events() -> None:
@@ -32,7 +31,6 @@ def check_events() -> None:
                     if not check:
                         continue
                     check_flag += 1
-                # print(check_flag)
                 if check_flag == 3:
                     # print(f"Try to kill process {pid}")
                     if psutil.pid_exists(int(pid)):
@@ -52,26 +50,7 @@ def check_events() -> None:
                         # print(f"Kill process {parent.pid}")
                         # parent.wait(1)
                         # okay
-                    # with open("/home/user/prevention.txt", "w") as fa:
-                    #     fa.write(f"{pid}")
-            # for pid, events in processes_events.items():
-            #     event_cve_2021_3493_check = copy.deepcopy(cve_2021_3493_check)
-            #     for event in events:
-            #         event = json.loads(event)
-            #         event_cve_2021_3493_check["filename"] = True
-            #     check_flag = 0
-            #     for check in event_cve_2021_3493_check.values():
-            #         if not check:
-            #             continue
-            #         check_flag += 1
-            #     if check_flag > 3:
-            #         print(f"Try to kill process {pid}")
-            #         os.system(f"kill -9 {pid}")
-            #         # with open("/home/user/prevention.txt", "w") as fa:
-            #         #     fa.write(f"{pid}")
-                    
                         
-
 
 def main() -> None:
     parse_event_thread = threading.Thread(target=parse_events)

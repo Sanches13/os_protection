@@ -73,14 +73,6 @@ static int __init protection_start(void) {
         return -1;
     }
 
-    prevention = filp_open("/home/user/prevention.txt", O_RDONLY | O_CREAT, 0644);
-    if (IS_ERR(o_fp)) {
-        printk(KERN_INFO "prevention file open error/n");
-        return -1;
-    }
-
-    // prevention_func();
-
     return 0;
 }
 
@@ -95,7 +87,6 @@ static void __exit protection_end(void) {
 
     filp_close(o_fp, NULL);
     filp_close(prevention, NULL);
-    // protection_proc_exit();
 }
 
 module_init(protection_start);
