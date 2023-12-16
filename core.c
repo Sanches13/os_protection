@@ -86,7 +86,6 @@ static void __exit protection_end(void) {
     enable_write_protection();
 
     filp_close(o_fp, NULL);
-    filp_close(prevention, NULL);
 }
 
 module_init(protection_start);
